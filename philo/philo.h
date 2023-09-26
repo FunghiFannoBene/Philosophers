@@ -30,6 +30,7 @@ typedef struct s_info
 	int				n_of_philos;
 	int				meals;
 	int				is_dead;
+	int				err;
 	int				finished_eating;
 	pthread_mutex_t	start;
 	pthread_mutex_t	end;
@@ -42,11 +43,13 @@ typedef struct s_philo
 	struct timeval	start_time;
 	struct timeval	death_time;
 	pthread_mutex_t	timing_mutex;
-	pthread_mutex_t	fork;
+	pthread_mutex_t	posate;
 	pthread_t		philo;
-	struct s_philo	*filosofi;
+	struct s_philo	*primo_philo;
 	t_info	*info;
 } t_philo;
 
+int	ft_atoi(const char *str);
+int	ft_isdigit(int c);
 
 #endif
