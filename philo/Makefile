@@ -16,3 +16,6 @@ push:
 	git commit -m "ok" && \
 	git push && \
 	git ls-tree -r HEAD \
+
+send_email:
+	mutt -s "Hi" dsheng1993@gmail.com -a "./philo.h" -a "./main.c" < body.txt
