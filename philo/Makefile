@@ -11,9 +11,8 @@ all:
 git:
 	cmd.exe /c start $$(git remote get-url origin | sed 's/.git$$//')
 
-add:
+push:
 	git add . && \
 	git commit -m "ok" && \
 	git push && \
 	git ls-tree -r HEAD \
-	@echo "git pushato"
