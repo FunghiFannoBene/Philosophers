@@ -15,4 +15,5 @@ add:
 	git add . && \
 	git commit -m "ok" && \
 	git push && \
-	git ls-tree -r HEAD
+	git ls-tree -r HEAD && \
+	@echo "git pushato"
