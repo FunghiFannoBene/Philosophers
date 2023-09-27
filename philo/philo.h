@@ -32,16 +32,18 @@ typedef struct s_info
 	int				is_dead;
 	int				err;
 	int				finished_eating;
+	long long int	start_time;
 	pthread_mutex_t	start;
 	pthread_mutex_t	end;
 	pthread_mutex_t	finish_eat;
+	int				flag;
 } t_info;
 
 typedef struct s_philo
 {
 	int				id;
-	struct timeval	start_time;
-	struct timeval	death_time;
+	long long int	philo_s_time;
+	int				id_iterator;
 	pthread_mutex_t	timing_mutex;
 	pthread_mutex_t	posate;
 	pthread_t		philo;
@@ -51,5 +53,6 @@ typedef struct s_philo
 
 int	ft_atoi(const char *str);
 int	ft_isdigit(int c);
+long long get_time_in_milliseconds(void);
 
 #endif
