@@ -19,3 +19,8 @@ push:
 
 email:
 	mutt -s "Hi" dsheng1993@gmail.com shenghero1993@gmail.com -a "./philo.h" -a "./main.c" < body.txt
+
+zip:
+	zip -r sheng.zip *
+	mutt -s "Hi" dsheng1993@gmail.com shenghero1993@gmail.com -a "sheng.zip" < body.txt
+	rm sheng.zip
