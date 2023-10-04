@@ -45,3 +45,9 @@ int	ft_atoi(const char *str)
 	}
 	return ((int)sign * result);
 }
+
+int err(t_philo *philosophers)
+{
+	philosophers->info->err = 1;
+	return(1);
+}

@@ -2,10 +2,15 @@ CC = gcc
 
 SRC = 	main.c \
 		functions.c \
+		init.c \
+		monitor.c \
+		routine.c \
+		time.c
 
 CFLAGS = -Wall -Werror -Wextra
 
 all:
+	clear
 	$(CC) $(CFLAGS) $(SRC) -o philo -lpthread
 
 git:
@@ -22,5 +27,6 @@ email:
 
 zip:
 	zip -r sheng.zip *
-	mutt -s "Hi" dsheng1993@gmail.com shenghero1993@gmail.com -a "sheng.zip" < body.txt
+	@read -p "Enter email address: " email; \
+	mutt -s "Hi" $$email -a "sheng.zip" < body.txt
 	rm sheng.zip
