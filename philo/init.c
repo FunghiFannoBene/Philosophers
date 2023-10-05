@@ -21,6 +21,18 @@ int init_info(t_info *info, char **argv, int argc)
 	return(0);
 }
 
+//inizializzo struttura di filosofi e delle sue informazioni
+int init_struct(t_philo **philosophers, t_info *info)
+{
+	*philosophers = NULL;
+	*philosophers = malloc(sizeof(t_philo) * info->n_of_philos); //filosofi
+	if(!*philosophers)
+		return(-1);
+	(*philosophers)->info = info;
+	return 0;
+}
+
+
 //inizializzo i mutex
 int	init_mutexes(pthread_mutex_t *m1, pthread_mutex_t *m2, pthread_mutex_t *m3)
 {

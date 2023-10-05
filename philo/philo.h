@@ -65,5 +65,13 @@ void *monitor(void *arg);
 int init_struct(t_philo **philosophers, t_info *info);
 bool pari_uguali(t_philo *philosophers);
 void get_new_start(t_philo *philosophers);
+int init_struct(t_philo **philosophers, t_info *info);
+void add_death_time(t_philo *philosophers);
+void get_new_time(t_philo *philosophers);
+bool tutti_i_pari_maggiore(t_philo *philosophers);
+int sleep_and_check(long long int eat, t_philo *philosophers);
+void wait_to_eat(t_philo *philosophers);
+bool tutti_i_dispari_uguali_a_me(t_philo *philosophers);
+bool dispari_uguali(t_philo *philosophers);
 
 #endif

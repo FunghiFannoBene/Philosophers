@@ -12,16 +12,6 @@
 
 #include "philo.h"
 
-int init_struct(t_philo **philosophers, t_info *info)
-{
-	*philosophers = NULL;
-	*philosophers = malloc(sizeof(t_philo) * info->n_of_philos); //filosofi
-	if(!*philosophers)
-		return(-1);
-	(*philosophers)->info = info;
-	return 0;
-}
-
 void join_all(t_philo *philosophers)
 {
 	int i=0;
@@ -31,17 +21,6 @@ void join_all(t_philo *philosophers)
 		i++;
 	}
 }
-
-int init_monitor_all_eat(t_philo *philosophers)
-{
-	while(!philosophers->info->is_dead)
-	{
-		if(pari_uguali(philosophers) && philosophers->n_meals == philosophers->info->meals)
-			return(1);
-	}
-	return(0);
-}
-
 
 int main(int argc, char** argv)
 {

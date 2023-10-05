@@ -5,7 +5,8 @@ SRC = 	main.c \
 		init.c \
 		monitor.c \
 		routine.c \
-		time.c
+		time.c \
+		time_busy.c
 
 CFLAGS = -Wall -Werror -Wextra
 

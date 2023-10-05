@@ -51,3 +51,65 @@ int err(t_philo *philosophers)
 	philosophers->info->err = 1;
 	return(1);
 }
+
+bool pari_uguali(t_philo *philosophers) 
+{
+    int i = 1;
+    while (!philosophers->info->is_dead && i < philosophers->info->n_of_philos) 
+	{
+		if (philosophers->info->n_of_philos % 2 == 1 && i == (philosophers->info->n_of_philos - 2))
+            break;
+		if (philosophers->primo_philo[i].n_meals != philosophers->primo_philo[(i+2 + philosophers->info->n_of_philos) % philosophers->info->n_of_philos].n_meals)
+		{
+            return false;
+        }
+        i+=2;
+    }
+    return true;
+}
+
+bool tutti_i_pari_maggiore(t_philo *philosophers) 
+{
+    int i = 1;
+    while (!philosophers->info->is_dead && i < philosophers->info->n_of_philos) 
+	{
+		if (philosophers->info->n_of_philos % 2 == 1 && i == (philosophers->info->n_of_philos - 2))
+            break;
+		if(philosophers->primo_philo[0].n_meals > philosophers->n_meals)
+			return(true);
+        if (philosophers->primo_philo[i].n_meals == philosophers->n_meals)
+		{
+            return false;
+        }
+        i += 2;
+    }
+    return true;
+}
+
+bool dispari_uguali(t_philo *philosophers) 
+{
+    int i = 0;
+    while (!philosophers->info->is_dead && i < philosophers->info->n_of_philos-1) 
+    {
+        if (philosophers->primo_philo[i].n_meals != philosophers->primo_philo[(i-2 + philosophers->info->n_of_philos) % philosophers->info->n_of_philos].n_meals)
+        {
+            return false;
+        }
+        i += 2;
+    }
+    return true;
+}
+
+bool tutti_i_dispari_uguali_a_me(t_philo *philosophers) 
+{
+    int i = 0;
+    while (!philosophers->info->is_dead && i < philosophers->info->n_of_philos-1) 
+	{
+        if (philosophers->primo_philo[i].n_meals < philosophers->n_meals)
+		{
+            return false;
+        }
+        i += 2;
+    }
+    return true;
+}
