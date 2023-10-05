@@ -40,14 +40,19 @@ int start_eat(t_philo *philosophers)
 	get_new_time(philosophers);
 	if (philo_print(philosophers, "is eating") < 0)
 		return ( pthread_mutex_unlock(right_fork),pthread_mutex_unlock(left_fork), -1);
-	sleep_and_check(philosophers->info->time_to_eat, philosophers);
-	pthread_mutex_unlock(right_fork);
-	pthread_mutex_unlock(left_fork);
-	if(++philosophers->n_meals == philosophers->info->meals)
+	philosophers->n_meals += 1;
+	if (sleep_and_check(philosophers->info->time_to_eat, philosophers) == -1)
+	{
+    return -1;
+	}
+	
+	if(philosophers->n_meals == philosophers->info->meals)
 	{
 		pthread_mutex_lock(&philosophers->timing_mutex);
 		philosophers->info->finished_eating++;
 		pthread_mutex_unlock(&philosophers->timing_mutex);
+		pthread_mutex_unlock(right_fork);
+		pthread_mutex_unlock(left_fork);
 		return(-1);
 	}
 	return(1);
@@ -68,15 +73,24 @@ int start_eat_odd(t_philo *philosophers)
 	get_new_time(philosophers);
 	
 	if (philo_print(philosophers, "is eating") < 0)
+	{
 		return ( pthread_mutex_unlock(right_fork), pthread_mutex_unlock(left_fork), -1);
-	sleep_and_check(philosophers->info->time_to_eat, philosophers);
-	pthread_mutex_unlock(right_fork);
-	pthread_mutex_unlock(left_fork);
-	if(++philosophers->n_meals == philosophers->info->meals)
+	}
+	pthread_mutex_lock(&philosophers->info->start_mutex);
+	philosophers->n_meals += 1;
+	if (sleep_and_check(philosophers->info->time_to_eat, philosophers) == -1) 
+	{
+    return -1;
+	}
+	pthread_mutex_unlock(&philosophers->info->start_mutex);
+
+	if(philosophers->n_meals == philosophers->info->meals)
 	{
 		pthread_mutex_lock(&philosophers->timing_mutex);
 		philosophers->info->finished_eating++;
 		pthread_mutex_unlock(&philosophers->timing_mutex);
+		pthread_mutex_unlock(left_fork);
+		pthread_mutex_unlock(right_fork);
 		return(-1);
 	}
 	return(1);
@@ -99,7 +113,6 @@ int forced_check(t_philo *philosophers)
 }
 
 
-
 void *philo_routine(void *arg)
 {
 	t_philo *philosophers;
@@ -118,7 +131,6 @@ void *philo_routine(void *arg)
 				printf("%lld %d is thinking\n", philosophers->philo_s_time, philosophers->id);
 			else
 				return(NULL);
-			
 			while (!philosophers->info->is_dead) 
 			{
         		if (dispari_uguali(philosophers) && tutti_i_dispari_uguali_a_me(philosophers))
@@ -157,8 +169,9 @@ void *philo_routine(void *arg)
 			get_new_start(philosophers);
 			if(philosophers->info->is_dead == 0 && philosophers->info->n_of_philos % 2 == 1)
 			{
-				if(philosophers->info->is_dead == 0 && philosophers->id == philosophers->info->n_of_philos)
+				if(philosophers->info->is_dead == 0 && philosophers->id == philosophers->info->n_of_philos )
 				{
+					//&& philosophers->n_meals == philosophers->primo_philo[0].n_meals
 					if(start_eat_odd(philosophers) < 0)
 						return(NULL);
 				}
@@ -179,21 +192,15 @@ void *philo_routine(void *arg)
 			if(philosophers->info->is_dead == 0)
 			{
 				printf("%lld %d is sleeping\n",  philosophers->philo_s_time, philosophers->id);
-				if(sleep_and_check(philosophers->info->time_to_sleep ,philosophers) == -1)
+				if(sleep_and_check2(philosophers->info->time_to_sleep ,philosophers) == -1)
 				{
 					return(NULL);
 				}
-							
 			}
 			else
 				return(NULL);
 		}
-		get_new_start(philosophers);
-		if (philosophers->info->meals == 0)
-		{
-			return(NULL);
-		}
-			
+		get_new_start(philosophers);		
 	}
 	return(NULL);
 }

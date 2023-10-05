@@ -73,5 +73,6 @@ int sleep_and_check(long long int eat, t_philo *philosophers);
 void wait_to_eat(t_philo *philosophers);
 bool tutti_i_dispari_uguali_a_me(t_philo *philosophers);
 bool dispari_uguali(t_philo *philosophers);
+int sleep_and_check2(long long int eat, t_philo *philosophers);
 
 #endif
