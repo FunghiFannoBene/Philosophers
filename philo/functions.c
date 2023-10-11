@@ -12,7 +12,6 @@
 
 #include "philo.h"
 
-
 int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
@@ -22,9 +21,9 @@ int	ft_isdigit(int c)
 
 int	ft_atoi(const char *str)
 {
-	unsigned int i;
-	int sign;
-	long result;
+	unsigned int	i;
+	int				sign;
+	long			result;
 
 	i = 0;
 	result = 0;

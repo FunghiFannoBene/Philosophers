@@ -63,9 +63,9 @@ static void	think(t_philo *philosophers)
 
 void	*philo_routine(void *arg)
 {
-	t_philo *philosophers;
-	pthread_mutex_t *left_fork;
-	pthread_mutex_t *right_fork;
+	t_philo			*philosophers;
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*right_fork;
 
 	philosophers = (t_philo *)arg;
 	left_fork = &philosophers->posate_mutex;

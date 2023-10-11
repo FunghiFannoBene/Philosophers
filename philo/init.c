@@ -12,36 +12,37 @@
 
 #include "philo.h"
 
-int init_info(t_info *info, char **argv, int argc)
+int	init_info(t_info *info, char **argv, int argc)
 {
 	if (argc < 5 || argc > 6)
-		return(-1);
+		return (-1);
 	info->n_of_philos = ft_atoi(argv[1]);
-	if(info->n_of_philos < 1)
-		return(-1);
+	if (info->n_of_philos < 1)
+		return (-1);
 	info->time_to_die = ft_atoi(argv[2]);
 	info->time_to_eat = ft_atoi(argv[3]);
 	info->time_to_sleep = ft_atoi(argv[4]);
-	if(argc == 6)
+	if (argc == 6)
 		info->meals = ft_atoi(argv[5]);
 	else
 		info->meals = -1;
-	if(info->time_to_die < 0 || info->time_to_eat < 0 || info->time_to_sleep < 0 || info->n_of_philos < 1)
-		return(-1);
+	if (info->time_to_die < 0 || info->time_to_eat < 0
+		|| info->time_to_sleep < 0 || info->n_of_philos < 1)
+		return (-1);
 	info->finished_eating = 0;
 	info->err = 0;
 	info->is_dead = 0;
-	return(0);
+	return (0);
 }
 
-int init_struct(t_philo **philosophers, t_info *info)
+int	init_struct(t_philo **philosophers, t_info *info)
 {
 	*philosophers = NULL;
 	*philosophers = malloc(sizeof(t_philo) * info->n_of_philos);
-	if(!*philosophers)
-		return(-1);
+	if (!*philosophers)
+		return (-1);
 	(*philosophers)->info = info;
-	return 0;
+	return (0);
 }
 
 int	init_mutexes(pthread_mutex_t *m1, pthread_mutex_t *m2)
@@ -53,22 +54,25 @@ int	init_mutexes(pthread_mutex_t *m1, pthread_mutex_t *m2)
 	return (0);
 }
 
-int init_threads(t_philo *philosophers)
+int	init_threads(t_philo *philosophers)
 {
-	int i=0;
+	int	i;
 
-	while(i < philosophers->info->n_of_philos)
+	i = 0;
+	while (i < philosophers->info->n_of_philos)
 	{
-		philosophers[i].id = i+1;
+		philosophers[i].id = i + 1;
 		philosophers[i].primo_philo = philosophers;
 		philosophers[i].n_meals = 0;
 		philosophers[i].info = philosophers->info;
 		philosophers[i].left = 0;
 		philosophers[i].right = 0;
-		if (pthread_mutex_init(&philosophers[i].posate_mutex, NULL) || pthread_mutex_init(&philosophers[i].timing_mutex, NULL) 
-			|| pthread_create(&philosophers[i].philo, NULL, philo_routine, &philosophers[i]))
+		if (pthread_mutex_init(&philosophers[i].posate_mutex, NULL)
+			|| pthread_mutex_init(&philosophers[i].timing_mutex, NULL)
+			|| pthread_create(&philosophers[i].philo, NULL, philo_routine,
+				&philosophers[i]))
 			return (err(philosophers));
 		i++;
 	}
-	return(0);
+	return (0);
 }

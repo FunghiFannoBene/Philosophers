@@ -12,10 +12,11 @@
 
 #include "philo.h"
 
-
 void	join_all(t_philo *philosophers)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (i < philosophers->info->n_of_philos)
 	{
 		pthread_join(philosophers[i].philo, NULL);
@@ -25,12 +26,12 @@ void	join_all(t_philo *philosophers)
 
 void	destroy_mutex(t_philo *philosophers)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	pthread_mutex_destroy(&philosophers->info->finish_eat_mutex);
 	pthread_mutex_destroy(&philosophers->info->print_mutex);
-	while(i < philosophers->info->n_of_philos)
+	while (i < philosophers->info->n_of_philos)
 	{
 		pthread_mutex_destroy(&philosophers->primo_philo[i].posate_mutex);
 		i++;
@@ -39,9 +40,9 @@ void	destroy_mutex(t_philo *philosophers)
 
 int	main(int argc, char **argv)
 {
-	t_philo *philosophers;
-	t_info info;
-	pthread_t monitor_t;
+	t_philo			*philosophers;
+	t_info			info;
+	pthread_t		monitor_t;
 
 	if (init_info(&info, argv, argc) == -1)
 		return (printf("Args errati...\n"));

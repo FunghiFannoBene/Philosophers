@@ -12,8 +12,7 @@
 
 #include "philo.h"
 
-
-static void	is_dead(t_philo *philosophers,int i)
+static void	is_dead(t_philo	*philosophers, int i)
 {
 	philosophers->info->is_dead = 1;
 	pthread_mutex_lock(&philosophers->info->print_mutex);
@@ -24,8 +23,8 @@ static void	is_dead(t_philo *philosophers,int i)
 
 void	*monitor(void *arg)
 {
-	t_philo *philosophers;
-	int i;
+	t_philo	*philosophers;
+	int		i;
 
 	i = 0;
 	philosophers = (t_philo *)arg;
@@ -33,10 +32,12 @@ void	*monitor(void *arg)
 	while (1)
 	{
 		get_new_start(&philosophers->primo_philo[i]);
-		if (philosophers->info->finished_eating == philosophers->info->n_of_philos
+		if (philosophers->info->finished_eating
+			== philosophers->info->n_of_philos
 			|| philosophers->info->meals == 0)
 			break ;
-		if (philosophers->primo_philo[i].philo_s_time >= (philosophers->primo_philo[i].philo_d_time))
+		if (philosophers->primo_philo[i].philo_s_time
+			>= (philosophers->primo_philo[i].philo_d_time))
 		{
 			is_dead(philosophers, i);
 			break ;

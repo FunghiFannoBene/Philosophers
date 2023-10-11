@@ -14,12 +14,12 @@
 
 long long	get_time_in_milliseconds(void)
 {
-	struct timeval current_time;
+	struct timeval	current_time;
+	long long		milliseconds;
+
 	gettimeofday(&current_time, NULL);
-
-	long long milliseconds = (long long)current_time.tv_sec * 1000
+	milliseconds = (long long)current_time.tv_sec * 1000
 		+ current_time.tv_usec / 1000;
-
 	return (milliseconds);
 }
 
