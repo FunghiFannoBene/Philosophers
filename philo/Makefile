@@ -6,13 +6,19 @@ SRC = 	main.c \
 		monitor.c \
 		routine.c \
 		time.c \
-		time_busy.c
+		lock_check.c
 
 CFLAGS = -Wall -Werror -Wextra
 
-all:
-	clear
-	$(CC) $(CFLAGS) $(SRC) -o philo -lpthread
+OBJ = $(SRC:.c=.o)
+
+all: philo
+
+philo: $(OBJ)
+	@$(CC) -g $(OBJ) -o philo -lpthread
+	@echo "Sheng's Philosophers."
+%.o: %.c
+	@$(CC) -g $(CFLAGS) -c $< -o $@
 
 git:
 	cmd.exe /c start $$(git remote get-url origin | sed 's/.git$$//')
@@ -31,3 +37,11 @@ zip:
 	@read -p "Enter email address: " email; \
 	mutt -s "Hi" $$email -a "sheng.zip" < body.txt
 	rm sheng.zip
+
+clean:
+	rm -f $(OBJ)
+
+fclean: clean
+	rm -rf philo
+
+re: fclean all

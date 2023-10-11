@@ -5,12 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: shhuang <dsheng1993@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/21 04:28:45 by shhuang           #+#    #+#             */
-/*   Updated: 2023/09/21 04:28:45 by shhuang          ###   ########.fr       */
+/*   Created: 2023/10/11 00:48:28 by shhuang           #+#    #+#             */
+/*   Updated: 2023/10/11 00:48:28 by shhuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
 
 int	ft_isdigit(int c)
 {
@@ -21,9 +22,9 @@ int	ft_isdigit(int c)
 
 int	ft_atoi(const char *str)
 {
-	unsigned int		i;
-	int					sign;
-	long				result;
+	unsigned int i;
+	int sign;
+	long result;
 
 	i = 0;
 	result = 0;
@@ -46,70 +47,15 @@ int	ft_atoi(const char *str)
 	return ((int)sign * result);
 }
 
-int err(t_philo *philosophers)
+int	err(t_philo *philosophers)
 {
 	philosophers->info->err = 1;
-	return(1);
+	return (1);
 }
 
-bool pari_uguali(t_philo *philosophers) 
+void	check_and_print(t_philo *philosophers, char *str)
 {
-    int i = 1;
-    while (!philosophers->info->is_dead && i < philosophers->info->n_of_philos) 
-	{
-		if (philosophers->info->n_of_philos % 2 == 1 && i == (philosophers->info->n_of_philos - 2))
-            break;
-		if (philosophers->primo_philo[i].n_meals != philosophers->primo_philo[(i+2 + philosophers->info->n_of_philos) % philosophers->info->n_of_philos].n_meals)
-		{
-            return false;
-        }
-        i+=2;
-    }
-    return true;
-}
-
-bool tutti_i_pari_maggiore(t_philo *philosophers) 
-{
-    int i = 1;
-    while (!philosophers->info->is_dead && i < philosophers->info->n_of_philos) 
-	{
-		if (philosophers->info->n_of_philos % 2 == 1 && i == (philosophers->info->n_of_philos - 2))
-            break;
-		if(philosophers->primo_philo[0].n_meals > philosophers->n_meals)
-			return(true);
-        if (philosophers->primo_philo[i].n_meals == philosophers->n_meals)
-		{
-            return false;
-        }
-        i += 2;
-    }
-    return true;
-}
-
-bool dispari_uguali(t_philo *philosophers) 
-{
-    int i = 0;
-    while (!philosophers->info->is_dead && i < philosophers->info->n_of_philos-1) 
-    {
-        if (philosophers->primo_philo[i].n_meals != philosophers->primo_philo[(i-2 + philosophers->info->n_of_philos) % philosophers->info->n_of_philos].n_meals)
-        {
-            return false;
-        }
-        i += 2;
-    }
-    return true;
-}
-
-bool tutti_i_dispari_uguali_a_me(t_philo *philosophers) 
-{
-    int i = 0;
-    while (!philosophers->info->is_dead && i < philosophers->info->n_of_philos-1) 
-	{
-        if (philosophers->primo_philo[i].n_meals < philosophers->n_meals)
-		{
-            return false;
-        }
-        i += 2;
-    }
-    return true;
+	if (!philosophers->info->is_dead)
+		printf("%lld %d %s\n", philosophers->philo_s_time, philosophers->id,
+			str);
 }
