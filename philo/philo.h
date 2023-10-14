@@ -33,7 +33,7 @@ typedef struct s_info
 	int				is_dead;
 	int				err;
 	int				finished_eating;
-	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	death_mutex;
 	pthread_mutex_t	finish_eat_mutex;
 }	t_info;
 
@@ -46,6 +46,7 @@ typedef struct s_philo
 	int				n_meals;
 	int				left;
 	int				right;
+	pthread_mutex_t	death_timing;
 	pthread_mutex_t	timing_mutex;
 	pthread_mutex_t	posate_mutex;
 	pthread_t		philo;
@@ -72,9 +73,10 @@ void		add_death_time(t_philo *philosophers);
 void		get_new_time(t_philo *philosophers);
 void		unlock_right(pthread_mutex_t *fork, t_philo *philosophers);
 void		unlock_left(pthread_mutex_t *fork, t_philo *philosophers);
-void		lock_right(pthread_mutex_t *fork, t_philo *philosophers);
+int			lock_right(pthread_mutex_t *fork, t_philo *philosophers);
 void		lock_left(pthread_mutex_t *fork, t_philo *philosophers);
 int			forced_check(t_philo *philosophers);
 void		check_and_print(t_philo *philosophers, char *str);
+void		check_and_print_death(t_philo *philosophers, char *str);
 
 #endif

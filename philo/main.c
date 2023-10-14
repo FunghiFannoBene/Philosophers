@@ -30,7 +30,7 @@ void	destroy_mutex(t_philo *philosophers)
 
 	i = 0;
 	pthread_mutex_destroy(&philosophers->info->finish_eat_mutex);
-	pthread_mutex_destroy(&philosophers->info->print_mutex);
+	pthread_mutex_destroy(&philosophers->info->death_mutex);
 	while (i < philosophers->info->n_of_philos)
 	{
 		pthread_mutex_destroy(&philosophers->primo_philo[i].posate_mutex);
@@ -47,7 +47,7 @@ int	main(int argc, char **argv)
 	if (init_info(&info, argv, argc) == -1)
 		return (printf("Args errati...\n"));
 	init_struct(&philosophers, &info);
-	if (init_mutexes(&info.print_mutex, &info.finish_eat_mutex) == -1)
+	if (init_mutexes(&info.death_mutex, &info.finish_eat_mutex) == -1)
 		return (free(philosophers), 0);
 	init_threads(philosophers);
 	pthread_create(&monitor_t, NULL, monitor, philosophers);

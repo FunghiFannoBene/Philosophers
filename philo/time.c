@@ -23,12 +23,6 @@ long long	get_time_in_milliseconds(void)
 	return (milliseconds);
 }
 
-void	add_death_time(t_philo *philosophers)
-{
-	philosophers->philo_d_time = philosophers->philo_s_time
-		+ (long long int)philosophers->info->time_to_die;
-}
-
 void	get_new_start(t_philo *philosophers)
 {
 	philosophers->philo_s_time = get_time_in_milliseconds()
@@ -36,7 +30,9 @@ void	get_new_start(t_philo *philosophers)
 }
 
 void	get_new_time(t_philo *philosophers)
-{
-	get_new_start(philosophers);
-	add_death_time(philosophers);
+{	
+	philosophers->philo_s_time = get_time_in_milliseconds()
+		- philosophers->philo_first_s_time;
+	philosophers->philo_d_time = philosophers->philo_s_time
+		+ (long long int)philosophers->info->time_to_die;
 }

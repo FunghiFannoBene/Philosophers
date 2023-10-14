@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lock_check.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shhuang <shhuang@student.42.fr>            +#+  +:+       +#+        */
+/*   By: shhuang <dsheng1993@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 00:43:37 by shhuang           #+#    #+#             */
-/*   Updated: 2023/10/11 22:54:09 by shhuang          ###   ########.fr       */
+/*   Updated: 2023/10/14 08:28:46 by shhuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 int	forced_check(t_philo *philosophers)
 {
 	if (philosophers->info->meals == 0)
-		return (-1);
-	if (philosophers->info->is_dead == 1)
 		return (-1);
 	if (philosophers->info->n_of_philos == 1)
 	{
@@ -29,36 +27,31 @@ int	forced_check(t_philo *philosophers)
 
 void	lock_left(pthread_mutex_t *fork, t_philo *philosophers)
 {
-	if (philosophers->left == 0)
-	{
 		pthread_mutex_lock(fork);
 		philosophers->left = 1;
-		pthread_mutex_lock(&(philosophers->info->print_mutex));
 		check_and_print(philosophers, "has taken a fork");
-		pthread_mutex_unlock(&(philosophers->info->print_mutex));
-	}
 }
 
-void	lock_right(pthread_mutex_t *fork, t_philo *philosophers)
+int	lock_right(pthread_mutex_t *fork, t_philo *philosophers)
 {
 	if (philosophers->left == 1)
 	{
 		pthread_mutex_lock(fork);
 		philosophers->right = 1;
-		pthread_mutex_lock(&philosophers->info->print_mutex);
 		check_and_print(philosophers, "has taken a fork");
-		pthread_mutex_unlock(&philosophers->info->print_mutex);
+		return(1);
 	}
+	return(0);
 }
 
 void	unlock_left(pthread_mutex_t *fork, t_philo *philosophers)
 {
-	philosophers->left = 0;
 	pthread_mutex_unlock(fork);
+	philosophers->left = 0;
 }
 
 void	unlock_right(pthread_mutex_t *fork, t_philo *philosophers)
 {
-	philosophers->right = 0;
 	pthread_mutex_unlock(fork);
+	philosophers->right = 0;
 }

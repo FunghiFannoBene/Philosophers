@@ -69,6 +69,7 @@ int	init_threads(t_philo *philosophers)
 		philosophers[i].right = 0;
 		if (pthread_mutex_init(&philosophers[i].posate_mutex, NULL)
 			|| pthread_mutex_init(&philosophers[i].timing_mutex, NULL)
+			|| pthread_mutex_init(&philosophers[i].death_timing, NULL)
 			|| pthread_create(&philosophers[i].philo, NULL, philo_routine,
 				&philosophers[i]))
 			return (err(philosophers));
