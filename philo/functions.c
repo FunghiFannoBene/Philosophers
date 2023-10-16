@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: shhuang <dsheng1993@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/11 00:48:28 by shhuang           #+#    #+#             */
-/*   Updated: 2023/10/11 00:48:28 by shhuang          ###   ########.fr       */
+/*   Created: 2023/10/16 23:00:02 by shhuang           #+#    #+#             */
+/*   Updated: 2023/10/16 23:00:02 by shhuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,15 @@ int	err(t_philo *philosophers)
 	return (1);
 }
 
-void check_and_print(t_philo *philosophers, char *str)
+void	check_and_print(t_philo *philosophers, char *str)
 {
 	pthread_mutex_lock(&philosophers->info->death_mutex);
-    if (!philosophers->info->is_dead)
-    {
-        	pthread_mutex_lock(&philosophers->timing_mutex);
-            printf("%lld %d %s\n", philosophers->philo_s_time, philosophers->id, str);
-            pthread_mutex_unlock(&philosophers->timing_mutex);
+	if (!philosophers->info->is_dead)
+	{
+		pthread_mutex_lock(&philosophers->timing_mutex);
+		printf("%lld %d %s\n", philosophers->philo_s_time, philosophers->id,
+			str);
+		pthread_mutex_unlock(&philosophers->timing_mutex);
 	}
 	pthread_mutex_unlock(&philosophers->info->death_mutex);
 }
@@ -67,7 +68,6 @@ void check_and_print(t_philo *philosophers, char *str)
 void	check_and_print_death(t_philo *philosophers, char *str)
 {
 	pthread_mutex_lock(&philosophers->timing_mutex);
-	printf("%lld %d %s\n", philosophers->philo_s_time, philosophers->id,
-		str);
+	printf("%lld %d %s\n", philosophers->philo_s_time, philosophers->id, str);
 	pthread_mutex_unlock(&philosophers->timing_mutex);
 }

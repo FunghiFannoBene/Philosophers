@@ -50,8 +50,12 @@ int	main(int argc, char **argv)
 	if (init_mutexes(&info.death_mutex, &info.finish_eat_mutex) == -1)
 		return (free(philosophers), 0);
 	init_threads(philosophers);
-	pthread_create(&monitor_t, NULL, monitor, philosophers);
-	pthread_join(monitor_t, NULL);
+	usleep(philosophers->info->n_of_philos * 1000);
+	if (!(philosophers->info->meals == 0))
+	{
+		pthread_create(&monitor_t, NULL, monitor, philosophers);
+		pthread_join(monitor_t, NULL);
+	}
 	join_all(philosophers);
 	destroy_mutex(philosophers);
 	free(philosophers);

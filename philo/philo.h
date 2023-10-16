@@ -20,9 +20,6 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-# define USECONDS_TO_S 1000000LL
-# define USECONDS_TO_MS 1000LL
-
 typedef struct s_info
 {
 	int				time_to_die;
@@ -44,8 +41,6 @@ typedef struct s_philo
 	long long int	philo_d_time;
 	long long int	philo_first_s_time;
 	int				n_meals;
-	int				left;
-	int				right;
 	pthread_mutex_t	death_timing;
 	pthread_mutex_t	timing_mutex;
 	pthread_mutex_t	posate_mutex;
@@ -77,5 +72,6 @@ void		lock_left(pthread_mutex_t *fork, t_philo *philosophers);
 int			forced_check(t_philo *philosophers);
 void		check_and_print(t_philo *philosophers, char *str);
 void		check_and_print_death(t_philo *philosophers, char *str);
+void		init_time(t_philo *philosophers);
 
 #endif

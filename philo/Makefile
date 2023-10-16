@@ -6,7 +6,8 @@ SRC = 	main.c \
 		monitor.c \
 		routine.c \
 		time.c \
-		lock_check.c
+		lock_check.c \
+		eat_start_time.c
 
 CFLAGS = -Wall -Werror -Wextra
 
