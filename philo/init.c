@@ -54,26 +54,31 @@ int	init_mutexes(pthread_mutex_t *m1, pthread_mutex_t *m2)
 	return (0);
 }
 
-int	init_threads(t_philo *philosophers)
-{
-	int	i;
+int init_threads(t_philo *philosophers) {
+    int i;
 
-	i = 0;
-	while (i < philosophers->info->n_of_philos)
-	{
-		philosophers[i].id = i + 1;
-		philosophers[i].primo_philo = philosophers;
-		philosophers[i].n_meals = 0;
-		philosophers[i].info = philosophers->info;
-		philosophers[i].left = 0;
-		philosophers[i].right = 0;
-		if (pthread_mutex_init(&philosophers[i].posate_mutex, NULL)
-			|| pthread_mutex_init(&philosophers[i].timing_mutex, NULL)
-			|| pthread_mutex_init(&philosophers[i].death_timing, NULL)
-			|| pthread_create(&philosophers[i].philo, NULL, philo_routine,
-				&philosophers[i]))
-			return (err(philosophers));
-		i++;
-	}
-	return (0);
+    // First loop: Initialize mutexes and set up philosopher structures
+    for (i = 0; i < philosophers->info->n_of_philos; i++) {
+        philosophers[i].id = i + 1;
+        philosophers[i].primo_philo = philosophers;
+        philosophers[i].n_meals = 0;
+        philosophers[i].info = philosophers->info;
+        philosophers[i].left = 0;
+        philosophers[i].right = 0;
+
+        if (pthread_mutex_init(&philosophers[i].posate_mutex, NULL) != 0 ||
+            pthread_mutex_init(&philosophers[i].timing_mutex, NULL) != 0 ||
+            pthread_mutex_init(&philosophers[i].death_timing, NULL) != 0) {
+            return err(philosophers);
+        }
+    }
+
+    // Second loop: Start threads
+    for (i = 0; i < philosophers->info->n_of_philos; i++) {
+        if (pthread_create(&philosophers[i].philo, NULL, philo_routine, &philosophers[i]) != 0) {
+            return err(philosophers);
+        }
+    }
+
+    return 0;
 }

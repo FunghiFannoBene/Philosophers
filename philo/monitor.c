@@ -17,7 +17,8 @@ static void	is_dead(t_philo	*philosophers, int i)
 	pthread_mutex_lock(&philosophers->info->death_mutex);
 	philosophers->info->is_dead = 1;
 	pthread_mutex_unlock(&philosophers->info->death_mutex);
-	check_and_print_death(philosophers->primo_philo + i, "has died");
+	if(philosophers->info->n_of_philos != 1)
+		check_and_print_death(philosophers->primo_philo + i, "has died");
 }
 
 void	*monitor(void *arg)

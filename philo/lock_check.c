@@ -6,7 +6,7 @@
 /*   By: shhuang <dsheng1993@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 00:43:37 by shhuang           #+#    #+#             */
-/*   Updated: 2023/10/14 08:28:46 by shhuang          ###   ########.fr       */
+/*   Updated: 2023/10/16 06:20:18 by shhuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ int	forced_check(t_philo *philosophers)
 		return (-1);
 	if (philosophers->info->n_of_philos == 1)
 	{
-		printf("0 1 is thinking\n");
-		printf("0 1 is has taken right fork\n");
+		pthread_mutex_lock(&philosophers->posate_mutex);
+		printf("0 %d has taken a fork\n", philosophers->id);
+		printf("%d %d has died\n", philosophers->info->time_to_die, philosophers->id);
+		pthread_mutex_unlock(&philosophers->posate_mutex);
 		return (-1);
 	}
 	return (1);
@@ -28,30 +30,22 @@ int	forced_check(t_philo *philosophers)
 void	lock_left(pthread_mutex_t *fork, t_philo *philosophers)
 {
 		pthread_mutex_lock(fork);
-		philosophers->left = 1;
 		check_and_print(philosophers, "has taken a fork");
 }
 
 int	lock_right(pthread_mutex_t *fork, t_philo *philosophers)
 {
-	if (philosophers->left == 1)
-	{
 		pthread_mutex_lock(fork);
-		philosophers->right = 1;
 		check_and_print(philosophers, "has taken a fork");
 		return(1);
-	}
-	return(0);
 }
 
-void	unlock_left(pthread_mutex_t *fork, t_philo *philosophers)
+void	unlock_left(pthread_mutex_t *fork)
 {
 	pthread_mutex_unlock(fork);
-	philosophers->left = 0;
 }
 
-void	unlock_right(pthread_mutex_t *fork, t_philo *philosophers)
+void	unlock_right(pthread_mutex_t *fork)
 {
 	pthread_mutex_unlock(fork);
-	philosophers->right = 0;
 }
