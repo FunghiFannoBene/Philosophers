@@ -34,6 +34,8 @@ void	destroy_mutex(t_philo *philosophers)
 	while (i < philosophers->info->n_of_philos)
 	{
 		pthread_mutex_destroy(&philosophers->primo_philo[i].posate_mutex);
+		pthread_mutex_destroy(&philosophers->primo_philo[i].timing_mutex);
+		pthread_mutex_destroy(&philosophers->primo_philo[i].death_timing);
 		i++;
 	}
 }

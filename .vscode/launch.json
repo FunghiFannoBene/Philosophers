@@ -2,14 +2,52 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "gdb",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/philo/philo",
+      "args": [
+        "5",
+        "602",
+        "200",
+        "200",
+        "14"
+      ],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}/philo",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "build",
+      "miDebuggerPath": "/usr/bin/gdb",
+      "miDebuggerArgs": "",
+      "logging": {
+        "trace": false,
+        "traceResponse": false,
+        "engineLogging": false,
+        "programOutput": false,
+        "exceptions": false
+      },
+      "linux": {
+        "MIMode": "gdb"
+      }
+    },
+    {
       "name": "C/C++ Runner: Debug Session",
       "type": "cppdbg",
       "request": "launch",
       "args": [],
       "stopAtEntry": false,
-      "externalConsole": true,
-      "cwd": "c:/Users/Sheng/Desktop/Philo_git",
-      "program": "c:/Users/Sheng/Desktop/Philo_git/build/Debug/outDebug",
+      "externalConsole": false,
+      "cwd": "/home/shhuang/Desktop/Philosophers/philo",
+      "program": "/home/shhuang/Desktop/Philosophers/philo/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
