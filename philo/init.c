@@ -57,7 +57,6 @@ int	init_mutexes(pthread_mutex_t *m1, pthread_mutex_t *m2)
 int init_threads(t_philo *philosophers) {
     int i;
 
-    // First loop: Initialize mutexes and set up philosopher structures
     for (i = 0; i < philosophers->info->n_of_philos; i++) {
         philosophers[i].id = i + 1;
         philosophers[i].primo_philo = philosophers;
@@ -73,7 +72,6 @@ int init_threads(t_philo *philosophers) {
         }
     }
 
-    // Second loop: Start threads
     for (i = 0; i < philosophers->info->n_of_philos; i++) {
         if (pthread_create(&philosophers[i].philo, NULL, philo_routine, &philosophers[i]) != 0) {
             return err(philosophers);

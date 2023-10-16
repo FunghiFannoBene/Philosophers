@@ -20,7 +20,10 @@ void	init_time(t_philo *philosophers)
 	pthread_mutex_unlock(&philosophers->timing_mutex);
 	if (philosophers->id % 2)
 		usleep(philosophers->info->time_to_eat * 1000);
+	if (philosophers->id == philosophers->info->n_of_philos && philosophers->info->n_of_philos % 2)
+		usleep(philosophers->info->time_to_eat * 1000);
 }
+
 int start_eat(t_philo *philosophers, pthread_mutex_t *left, pthread_mutex_t *right)
 {
     lock_left(left, philosophers);
@@ -32,27 +35,38 @@ int start_eat(t_philo *philosophers, pthread_mutex_t *left, pthread_mutex_t *rig
     usleep(philosophers->info->time_to_eat * 1000);
 	unlock_left(left);
     unlock_right(right);
-    philosophers->n_meals++;
-  
+	philosophers->n_meals++;
+
     if (philosophers->n_meals == philosophers->info->meals) {
         pthread_mutex_lock(&philosophers->info->finish_eat_mutex);
         philosophers->info->finished_eating++;
         pthread_mutex_unlock(&philosophers->info->finish_eat_mutex);
         return (-1);
     }
-    
     return (1);
 }
 
 static void	good_night(t_philo *philosophers)
 {
+	int sleep = philosophers->info->time_to_sleep * 1000;
 	check_and_print(philosophers, "is sleeping");
-	usleep(philosophers->info->time_to_sleep * 1000);
+	usleep(sleep);
 }
 
-static void	think(t_philo *philosophers)
+static void think(t_philo *philosophers) 
 {
-	check_and_print(philosophers, "is thinking");
+
+    check_and_print(philosophers, "is thinking");
+    if(philosophers->info->n_of_philos % 2)
+	{
+    int crea_cerchio_perfetto = 0;
+    
+    if (philosophers->info->time_to_sleep <= (philosophers->info->time_to_eat * 2))
+	{
+        crea_cerchio_perfetto = (philosophers->info->time_to_eat * 2 - philosophers->info->time_to_sleep) * 1000;
+    }
+    usleep(crea_cerchio_perfetto);
+	}
 }
 
 void	*philo_routine(void *arg)
@@ -68,11 +82,13 @@ void	*philo_routine(void *arg)
 	right_fork = &(philosophers->primo_philo[(philosophers->id
 				% philosophers->info->n_of_philos)].posate_mutex);
 
-	int id = philosophers->id;
-	if (id < (id+1) % philosophers->info->n_of_philos) {
+	if (left_fork < right_fork) 
+	{
 	    first_fork = left_fork;
 	    second_fork = right_fork;
-	} else {
+	} 
+	else 
+	{
 	    first_fork = right_fork;
 	    second_fork = left_fork;
 	}
@@ -105,4 +121,3 @@ void	*philo_routine(void *arg)
 
 	return (NULL);
 }
-
